@@ -11,9 +11,9 @@ void InputHanlder::handleInput() {
 }
 
 void JumpCommand::execute(GameObject& go) {
-    go.Jump();
+   // go.Jump();
 }
 
 void FireCommand::execute(GameObject& go) {
-    go.Fire();
+   // go.Fire();
 }

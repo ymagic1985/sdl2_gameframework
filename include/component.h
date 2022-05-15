@@ -1,4 +1,7 @@
+#pragma once
+#include "input.h"
 
+class GameObject;
 class Component {
     public:
         virtual ~Component() {}
@@ -6,24 +9,24 @@ class Component {
 };
 
 class InputComponent : public Component {
-    Public:
-        virtual ~InputComponent() {};
-        virtual void receive(int message) override;
-        virtual void update();
+    public:
+        virtual ~InputComponent() {}
+        virtual void receive(int message) override {}
+        virtual void update(GameObject* obj) = 0;
 };
 
 class PhysicsComponent : public Component {
     public:
-        virtual ~PhysicsComponent() {};
-        virtual void receive(int message) override;
-        virtual void update(double dt);
+        virtual ~PhysicsComponent() {}
+        virtual void receive(int message) override {};
+        virtual void update(double dt, GameObject* obj) = 0;
 };
 
 class GraphicsComponent : public Component {
     public:
-        virtual ~GraphicsComponent() {};
-        virtual void receive(int message) override;
-        virtual void update() override;
+        virtual ~GraphicsComponent() {}
+        virtual void receive(int message) override {};
+        virtual void update() = 0;
 };
 
 

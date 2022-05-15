@@ -1,6 +1,16 @@
 #include <SDL2/SDL.h>
 #include "waterEffect.h"
 #include "texturedRectangle.h"
+#include "gameObject.h"
+
+void WaterInputComponent::receive(int message) {
+}
+
+void WaterInputComponent::update(GameObject* obj) {
+    if(Input::isMouseLeftPressed()) ;
+    if(Input::isMouseMiddlePressed()) ;
+    if(Input::isMouseRightPressed());
+}
 
 WaterEffect::WaterEffect(SDL_Renderer* renderer,const std::string& name) {
     std::shared_ptr<TexturedRectangle> rect1 = std::make_shared<TexturedRectangle>(renderer, name.c_str());
@@ -50,4 +60,4 @@ void WaterEffect::setBlendMode(SDL_BlendMode blendMode) {
     for(auto r : m_fg_rects)
         SDL_SetTextureBlendMode(r->getTexture(), blendMode);
 }
- 
+

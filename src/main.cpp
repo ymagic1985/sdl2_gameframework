@@ -13,6 +13,7 @@
 #include "configure.h"
 #include "texturedRectangle.h"
 #include "waterEffect.h"
+//#include "input.h"
 
 void initializeConfig() {
     Configure::getInstance().setWindowWidth(640);
@@ -27,6 +28,8 @@ void setPixel(SDL_Surface* surface, int x, int y, uint8_t r, uint8_t g, uint8_t 
     pixelArray[y*surface->pitch + x*surface->format->BytesPerPixel+2] = r;
     SDL_UnlockSurface(surface);
 }
+//Initialize input
+Input* Input::s_Instance = new MacInput();
 
 int main(int argc, char* argv[]){
 
@@ -35,7 +38,7 @@ int main(int argc, char* argv[]){
     // window that is allocated from SDL_CreateWindow
     SDL_Window* window=nullptr;
     SDL_Surface* screen;
-       
+        
     initializeConfig();
     // Initialize the video subsystem.
     // If it returns less than 1, then an
@@ -96,10 +99,8 @@ int main(int argc, char* argv[]){
 	SDL_Event event;
         //(1) hanlde inputs and start out event loop
         //get mouse position
-        int x, y;
-        Uint32 buttons;
-        buttons = SDL_GetMouseState(&x, &y);
-    	while (SDL_PollEvent(&event)){
+        SDL_PumpEvents();
+    	while (SDL_PeepEvents(&event, 1, SDL_GETEVENT, 0, SDL_LASTEVENT) == 1){
 	  //Handle each specific event
 	  switch(event.type) {
 		 case SDL_QUIT:
@@ -110,7 +111,7 @@ int main(int argc, char* argv[]){
                           //rectangle2.y = event.motion.y - rectangle2.h/2;
                           //std::cout<<"mouse.x:"<<event.motion.x<<"  mouse.y: "<<event.motion.y<<"\n";
                           break;
-                 case SDL_MOUSEBUTTONDOWN:
+                /* case SDL_MOUSEBUTTONDOWN:
                           switch (event.button.button) {
                               case SDL_BUTTON_LEFT:
                                  water.setBlendMode(SDL_BLENDMODE_ADD);
@@ -122,7 +123,7 @@ int main(int argc, char* argv[]){
                                   water.setBlendMode(SDL_BLENDMODE_MOD);
                                  break;
                           } 
-                          break;
+                          break;*/
                  default:
                           //SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_NONE);
                           break;
@@ -133,6 +134,20 @@ int main(int argc, char* argv[]){
           //swap opengl window since we have double buffer setup here
           SDL_GL_SwapWindow(window);
     	}
+    /*    if(Input::isMouseLeftPressed()) {
+            water.setBlendMode(SDL_BLENDMODE_ADD);
+        }
+        if(Input::isMouseRightPressed()) {
+            water.setBlendMode(SDL_BLENDMODE_MOD);
+        }
+        if(Input::isMouseMiddlePressed()) {
+            water.setBlendMode(SDL_BLENDMODE_BLEND);
+        }
+        if(Input::isKeyboardPressed(SDL_SCANCODE_W)) {
+            std::cout<<"W is pressed!\n";
+        }
+*/
+        std::cout<<"X: "<<Input::getMouseX()<<"  Y: "<<Input::getMouseY()<<"\n";
         //(2) handle Updates
         water.update();
         //(3) Clear and Draw the Screen

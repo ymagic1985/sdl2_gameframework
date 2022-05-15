@@ -24,8 +24,20 @@ GameObject& GameObject::operator=(GameObject&& rhs) {
     return *this;
 }
 
-void GameObject::Jump() {
+void GameObject::update(double dt) {
+    if(mInput) mInput->update(this);
+    if(mPhysics) mPhysics->update(dt, this);
+    if(mGrapyhics) mGrapyhics->update();
 }
 
-void GameObject::Fire() {
+void GameObject::setPosX(float posX) {
+    mPosition.x = posX;
+}
+
+void GameObject::setPosY(float posY) {
+    mPosition.y = posY;
+}
+
+void GameObject::setPosition(Point2D pos) {
+    mPosition = pos;
 }
