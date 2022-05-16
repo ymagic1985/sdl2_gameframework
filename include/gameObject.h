@@ -1,4 +1,3 @@
-
 #include <vector>
 #include "component.h"
 
@@ -12,8 +11,8 @@ typedef Vector2D Point2D;
 class GameObject {
     public:
         GameObject(){}
-        GameObject(InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics) :
-            mInput(input), mPhysics(physics), mGrapyhics(graphics) {}
+        GameObject(InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics);
+        
         virtual ~GameObject();
         GameObject(const GameObject& rhs);
         GameObject& operator=(const GameObject& rhs);
@@ -27,7 +26,7 @@ class GameObject {
         inline float getPosX() const { return mPosition.x; }
         inline float getPosY() const { return mPosition.y; }
         inline Point2D getPosition() const { return mPosition; }
-
+        virtual void sendMessage(Component* sender, int message);
     protected:
         Point2D mPosition;
         InputComponent* mInput;

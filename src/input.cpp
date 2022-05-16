@@ -22,11 +22,11 @@ bool MacInput::isMouseLeftPressedImpl() {
 }
 
 bool MacInput::isMouseMiddlePressedImpl() {
-    return isMouseClicked(3);
+    return isMouseClicked(2);
 }
 
 bool MacInput::isMouseRightPressedImpl() {
-    return isMouseClicked(2);
+    return isMouseClicked(3);
 }
 
 std::pair<float, float> MacInput::getMousePositionImpl() {

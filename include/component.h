@@ -26,7 +26,7 @@ class GraphicsComponent : public Component {
     public:
         virtual ~GraphicsComponent() {}
         virtual void receive(int message) override {};
-        virtual void update() = 0;
+        virtual void update(GameObject* obj) = 0;
 };
 
 

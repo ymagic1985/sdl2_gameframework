@@ -13,6 +13,8 @@
 #include "configure.h"
 #include "texturedRectangle.h"
 #include "waterEffect.h"
+#include "gameObject.h"
+
 //#include "input.h"
 
 void initializeConfig() {
@@ -84,8 +86,12 @@ int main(int argc, char* argv[]){
     //upload the pixels to the gpu
     // set the color key after loading the surface, and before the texture
     //SDL_SetColorKey(surface, SDL_TRUE,SDL_MapRGB(surface->format, 0xFF, 0, 0xFF));
-    WaterEffect water(renderer, "../images/pool2.bmp");
+    //WaterEffect water(renderer, "../images/pool2.bmp");
+    WaterInputComponent* wInput = new WaterInputComponent();
+    WaterPyhsicsComponent* wPyhsics = new WaterPyhsicsComponent();
+    WaterGraphicsComponent* wGraphics = new WaterGraphicsComponent(renderer, "../images/pool2.bmp");
 
+    GameObject* water = new GameObject(wInput, wPyhsics, wGraphics);
     bool gameIsRunnging = true;
     //main game loop
     while (gameIsRunnging){
@@ -147,9 +153,9 @@ int main(int argc, char* argv[]){
             std::cout<<"W is pressed!\n";
         }
 */
-        std::cout<<"X: "<<Input::getMouseX()<<"  Y: "<<Input::getMouseY()<<"\n";
+        //std::cout<<"X: "<<Input::getMouseX()<<"  Y: "<<Input::getMouseY()<<"\n";
         //(2) handle Updates
-        water.update();
+        //water.update();
         //(3) Clear and Draw the Screen
         //clear the screen, make it all black
         SDL_SetRenderDrawColor(renderer, 0, 0, 0xFF, SDL_ALPHA_OPAQUE); 
@@ -161,13 +167,14 @@ int main(int argc, char* argv[]){
         
         //int w, h; 
         //SDL_QueryTexture(texture, NULL, NULL, &w, &h);
-        SDL_Delay(20);
+        
+        water->update(0.f);
 
-
-        water.render(renderer);
+        //water.render(renderer);
         //Finally show what we've drawn
         SDL_RenderPresent(renderer);
-        SDL_UpdateWindowSurface(window);
+        SDL_Delay(20);
+        //SDL_UpdateWindowSurface(window);
     }
 
     // We destroy our window. We are passing in the pointer
