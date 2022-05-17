@@ -16,8 +16,10 @@ class TexturedRectangle {
         void update();
         void setRectY(int y) { mRect.y = y; }
         void setRectX(int x) { mRect.x = x; }
-        int getRectX() const { return mRect.x; }
-        int getRectY() const { return mRect.y; }
+        inline int getRectX() const { return mRect.x; }
+        inline int getRectY() const { return mRect.y; }
+        inline int getRectWidth() const { return mRect.w; }
+        inline int getRectHeight() const { return mRect.h; }
         SDL_Texture* getTexture() const { return mTexture; }
     private:
         SDL_Rect mRect;

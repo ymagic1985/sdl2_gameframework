@@ -42,16 +42,17 @@ void WaterPyhsicsComponent::receive(int message) {
             break;
     }
 }
-float ypos = 480;
+
 void WaterPyhsicsComponent::update(double dt, GameObject* obj) {
-    float x = obj->getPosX() + mHori_velocity;
-    float y = obj->getPosY() + mVert_velocity;
+    int x = obj->getPosX() + mHori_velocity;
+    int y = obj->getPosY() + mVert_velocity;
+    
     if(x > 640) x = -640;
-    if(y > ypos) y = -ypos;
-    std::cout<<"Horizontal: "<<mHori_velocity<<"  Vertical: "<<mVert_velocity<<"\n";
+    if(y > 480) y = -480;
+    //std::cout<<"Horizontal: "<<mHori_velocity<<"  Vertical: "<<mVert_velocity<<"\n";
     obj->setPosX(x);
     obj->setPosY(y);
-    std::cout<<"X: "<<obj->getPosX() <<"  Y: "<<obj->getPosY()<<"\n";
+    //std::cout<<"X: "<<obj->getPosX() <<"  Y: "<<obj->getPosY()<<"\n";
 }
 
 WaterGraphicsComponent::WaterGraphicsComponent(SDL_Renderer* renderer, const std::string& name) : mRenderer(renderer) {
@@ -64,7 +65,7 @@ WaterGraphicsComponent::WaterGraphicsComponent(SDL_Renderer* renderer, const std
     rect2->setRectangeProperties(-640, 0, 640, 480);
 
     rect3->setRectangeProperties(0, 0, 640, 480);
-    rect4->setRectangeProperties(0,-ypos, 640, 480);
+    rect4->setRectangeProperties(0,-480, 640, 480);
  
     m_bg_rects.push_back(rect1);
     m_bg_rects.push_back(rect2);
@@ -95,7 +96,7 @@ void WaterGraphicsComponent::update(GameObject* obj) {
     m_bg_rects[0]->setRectX(obj->getPosX());
     m_bg_rects[1]->setRectX(obj->getPosX() > 0 ? obj->getPosX() - 640 : obj->getPosX() + 640);
     m_fg_rects[0]->setRectY(obj->getPosY());
-    m_fg_rects[1]->setRectY(obj->getPosY() > 0 ? obj->getPosY() - ypos : obj->getPosY() + ypos);
+    m_fg_rects[1]->setRectY(obj->getPosY() > 0 ? obj->getPosY() - 480 : obj->getPosY() + 480);
     
     for(auto r : m_fg_rects) SDL_SetTextureBlendMode(r->getTexture(), mFG_blendMode);
     for(auto r : m_bg_rects) {
