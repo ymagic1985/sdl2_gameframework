@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SDL2/SDL.h>
+#include "input.h"
 #include "waterEffect.h"
 #include "texturedRectangle.h"
 #include "gameObject.h"

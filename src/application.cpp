@@ -3,7 +3,7 @@
 
 #include "application.h"
 
-Application::Application(const char* title, int x, int y, int w, int h) : mTitle(title), mWindowX(x), mWindowY(y), mWindowWidth(w), mWindowHeight(h), mIsAppRunning(true) {
+Application::Application(const char* title, int x, int y, int w, int h) : mTitle(title), mWindowX(x), mWindowY(y), mWindowWidth(w), mWindowHeight(h), mIsAppRunning(true), mTickTime(0), mMaxFrameRate(16) {
     initialize();
 }
 
@@ -28,6 +28,7 @@ void Application::initialize() {
             SDL_WINDOW_SHOWN);
 
     mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);
+    
 }
 
 void Application::setEventCallback(std::function<void(void)> func) {
@@ -40,6 +41,7 @@ void Application::setRenderCallback(std::function<void(void)> func) {
 
 void Application::runLoop() {
     while(mIsAppRunning) {
+        Uint32 start = SDL_GetTicks();
         SDL_PumpEvents();
         SDL_GetMouseState(&mMouseX, &mMouseY);
         
@@ -54,7 +56,9 @@ void Application::runLoop() {
 
         SDL_RenderPresent(mRenderer);
         //todo: handle frame cap here
-        SDL_Delay(100);
+        mTickTime = SDL_GetTicks() - start;
+        if(mTickTime < mMaxFrameRate) 
+            SDL_Delay(mMaxFrameRate - mTickTime);
     }
 }
 

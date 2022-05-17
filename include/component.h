@@ -1,5 +1,4 @@
 #pragma once
-#include "input.h"
 
 class GameObject;
 class Component {

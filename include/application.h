@@ -27,5 +27,7 @@ class Application {
         int mWindowY;
         int mWindowWidth;
         int mWindowHeight;
+        Uint32 mTickTime;
+        Uint32 mMaxFrameRate;
         bool mIsAppRunning;
 };

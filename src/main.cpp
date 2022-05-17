@@ -15,7 +15,7 @@
 #include "texturedRectangle.h"
 #include "waterEffect.h"
 #include "gameObject.h"
-
+#include "input.h"
 
 Application* app;// = new Application("SDL Game Framework", 0, 0, 640, 480);
 WaterInputComponent* wInput;// = new WaterInputComponent();
