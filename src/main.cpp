@@ -51,7 +51,7 @@ void handleEvents() {
 }
 
 void handleRendering() {
-    water->update(0.0f);
+    water->update(app->getDeltaTime());
 }
                      
 

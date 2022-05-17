@@ -1,4 +1,5 @@
 #pragma once
+#include <SDL2/SDL.h>
 
 class GameObject;
 class Component {
@@ -18,7 +19,7 @@ class PhysicsComponent : public Component {
     public:
         virtual ~PhysicsComponent() {}
         virtual void receive(int message) override {};
-        virtual void update(double dt, GameObject* obj) = 0;
+        virtual void update(Uint32 dt, GameObject* obj) = 0;
 };
 
 class GraphicsComponent : public Component {

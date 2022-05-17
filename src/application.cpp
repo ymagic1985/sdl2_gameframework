@@ -3,7 +3,7 @@
 
 #include "application.h"
 
-Application::Application(const char* title, int x, int y, int w, int h) : mTitle(title), mWindowX(x), mWindowY(y), mWindowWidth(w), mWindowHeight(h), mIsAppRunning(true), mTickTime(0), mMaxFrameRate(16) {
+Application::Application(const char* title, int x, int y, int w, int h) : mTitle(title), mWindowX(x), mWindowY(y), mWindowWidth(w), mWindowHeight(h), mIsAppRunning(true), mDeltaTime(0), mMaxFrameRate(16) {
     initialize();
 }
 
@@ -56,9 +56,9 @@ void Application::runLoop() {
 
         SDL_RenderPresent(mRenderer);
         //todo: handle frame cap here
-        mTickTime = SDL_GetTicks() - start;
-        if(mTickTime < mMaxFrameRate) 
-            SDL_Delay(mMaxFrameRate - mTickTime);
+        mDeltaTime = SDL_GetTicks() - start;
+        if(mDeltaTime < mMaxFrameRate) 
+            SDL_Delay(mMaxFrameRate - mDeltaTime);
     }
 }
 

@@ -44,7 +44,7 @@ void WaterPyhsicsComponent::receive(int message) {
     }
 }
 
-void WaterPyhsicsComponent::update(double dt, GameObject* obj) {
+void WaterPyhsicsComponent::update(Uint32 dt, GameObject* obj) {
     int x = obj->getPosX() + mHori_velocity;
     int y = obj->getPosY() + mVert_velocity;
     

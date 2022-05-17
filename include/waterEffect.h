@@ -20,7 +20,7 @@ class WaterPyhsicsComponent : public PhysicsComponent {
         WaterPyhsicsComponent();
         ~WaterPyhsicsComponent(); 
         virtual void receive(int message) override;
-        virtual void update(double dt, GameObject* obj) override;
+        virtual void update(Uint32 dt, GameObject* obj) override;
     private:
         float mHori_velocity;
         float mVert_velocity;

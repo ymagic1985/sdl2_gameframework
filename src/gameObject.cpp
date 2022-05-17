@@ -36,7 +36,7 @@ GameObject& GameObject::operator=(GameObject&& rhs) {
     return *this;
 }
 
-void GameObject::update(double dt) {
+void GameObject::update(Uint32 dt) {
     if(mInput) mInput->update(this);
     if(mPhysics) mPhysics->update(dt, this);
     if(mGrapyhics) mGrapyhics->update(this);

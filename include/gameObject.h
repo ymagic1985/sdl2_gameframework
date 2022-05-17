@@ -19,7 +19,7 @@ class GameObject {
         GameObject(GameObject&& rhs);        
         GameObject& operator=(GameObject&& rhs);
         
-        virtual void update(double dt);
+        virtual void update(Uint32 dt);
         void setPosX(float posX);
         void setPosY(float posY);
         void setPosition(Point2D pos);

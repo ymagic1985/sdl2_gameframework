@@ -14,6 +14,7 @@ class Application {
         void quit();
         inline int getMouseX() const { return mMouseX; }
         inline int getMouseY() const { return mMouseY; }
+        inline int getDeltaTime() const { return mDeltaTime; }
         inline SDL_Renderer* getRenderer() const { return mRenderer; }
     private:
         SDL_Window* mWindow = nullptr;
@@ -27,7 +28,7 @@ class Application {
         int mWindowY;
         int mWindowWidth;
         int mWindowHeight;
-        Uint32 mTickTime;
+        Uint32 mDeltaTime;
         Uint32 mMaxFrameRate;
         bool mIsAppRunning;
 };
