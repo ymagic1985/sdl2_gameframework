@@ -1,22 +1,23 @@
-#ifndef RESOURCE_MANAGER_H
-#define RESOURCE_MANAGER_H
+#pragma once
 
 #include <string>
 #include <unordered_map>
 
 #include <SDL2/SDL.h> 
 
-class ResourceManager {
-    private:
-        ResourceManager();
-        ResourceManager(ResourceManager const&);
-        ResourceManager& operator=(ResourceManager const&);
+namespace Man520 {
 
-        std::unordered_map<std::string, SDL_Surface*> m_surfaces;
-        
-    public:
-        static ResourceManager& getInstance();
-        SDL_Surface* getSurface(const std::string& name);
-};
+    class ResourceManager {
+        private:
+            ResourceManager();
+            ResourceManager(ResourceManager const&);
+            ResourceManager& operator=(ResourceManager const&);
 
-#endif
+            std::unordered_map<std::string, SDL_Surface*> m_surfaces;
+            
+        public:
+            static ResourceManager& getInstance();
+            SDL_Surface* getSurface(const std::string& name);
+    };
+
+}

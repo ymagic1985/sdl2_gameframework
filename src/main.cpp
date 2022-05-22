@@ -1,4 +1,4 @@
-// On macOS compile with:
+//On macOS compile with:
 // g++ -std=c++17 main.cpp configure.cpp command.cpp texturedRectangle.cpp glad/src/glad.c -I ./glad/include -o prog -lsdl2  
 
 // C++ Standard Libraries
@@ -20,7 +20,7 @@
 #include "input.h"
 #include "animatedSprite.h"
 
-Application* app;
+Man520::Application* app;
 entt::registry entt_registry;
 
 void initializeConfig() {
@@ -56,10 +56,10 @@ int vIndex = 0;
 int x{100}, y{100};
 void handleUpdate() {
     //water->update(app->getDeltaTime());
-    auto view = entt_registry.view<GameObject>();
+    auto view = entt_registry.view<Man520::GameObject>();
 
     for(auto entity : view) {
-       auto &gameObject = view.get<GameObject>(entity);
+       auto &gameObject = view.get<Man520::GameObject>(entity);
        gameObject.update(app->getDeltaTime());
     }
 
@@ -79,9 +79,9 @@ void handleUpdate() {
     
     x += vels[vIndex][0];
     y += vels[vIndex][1];
-    auto view2 = entt_registry.view<AnimatedSprite>();
+    auto view2 = entt_registry.view<Man520::AnimatedSprite>();
     for(auto entity : view2) {
-        auto &sprite = view2.get<AnimatedSprite>(entity);
+        auto &sprite = view2.get<Man520::AnimatedSprite>(entity);
         sprite.playFrame(0, 92*dir, 48, 92, frame/4);
         if(frame > 48) frame = 0;
         sprite.draw(x, y, 48, 92);
@@ -95,18 +95,18 @@ Input* Input::s_Instance = new MacInput();
 
 int main(int argc, char* argv[]){
    
-    app = new Application("SDL Game Framework", 0, 0, 640, 480);
+    app = new Man520::Application("SDL Game Framework", 0, 0, 640, 480);
    
     const auto entity = entt_registry.create();
-    entt_registry.emplace<WaterInputComponent>(entity);
-    entt_registry.emplace<WaterPyhsicsComponent>(entity);
-    entt_registry.emplace<WaterGraphicsComponent>(entity, app->getRenderer(), "../images/pool2.bmp");
-    entt_registry.emplace<GameObject>(entity, &entt_registry.get<WaterInputComponent>(entity),
-                                              &entt_registry.get<WaterPyhsicsComponent>(entity),
-                                              &entt_registry.get<WaterGraphicsComponent>(entity));
+    entt_registry.emplace<Man520::WaterInputComponent>(entity);
+    entt_registry.emplace<Man520::WaterPyhsicsComponent>(entity);
+    entt_registry.emplace<Man520::WaterGraphicsComponent>(entity, app->getRenderer(), "../images/pool2.bmp");
+    entt_registry.emplace<Man520::GameObject>(entity, &entt_registry.get<Man520::WaterInputComponent>(entity),
+                                              &entt_registry.get<Man520::WaterPyhsicsComponent>(entity),
+                                              &entt_registry.get<Man520::WaterGraphicsComponent>(entity));
    
     const auto player = entt_registry.create();
-    entt_registry.emplace<AnimatedSprite>(player, app->getRenderer(), "../images/womanSprite.bmp");
+    entt_registry.emplace<Man520::AnimatedSprite>(player, app->getRenderer(), "../images/womanSprite.bmp");
     
     app->setEventCallback(handleEvents);
     app->setUpdateCallback(handleUpdate);
