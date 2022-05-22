@@ -9,7 +9,7 @@ class Application {
         ~Application();
         void initialize();
         void setEventCallback(std::function<void(void)> func);
-        void setRenderCallback(std::function<void(void)> func);
+        void setUpdateCallback(std::function<void(void)> func);
         void runLoop();
         void quit();
         inline int getMouseX() const { return mMouseX; }
@@ -21,7 +21,7 @@ class Application {
         SDL_Renderer*  mRenderer = nullptr;
         const char* mTitle;
         std::function<void(void)> mEventCallback;
-        std::function<void(void)> mRenderCallback;
+        std::function<void(void)> mUpdateCallback;
         int mMouseX;
         int mMouseY;
         int mWindowX;

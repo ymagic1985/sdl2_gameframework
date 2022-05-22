@@ -35,8 +35,8 @@ void Application::setEventCallback(std::function<void(void)> func) {
     mEventCallback = func;
 }
 
-void Application::setRenderCallback(std::function<void(void)> func) {
-    mRenderCallback = func;
+void Application::setUpdateCallback(std::function<void(void)> func) {
+    mUpdateCallback = func;
 }
 
 void Application::runLoop() {
@@ -52,7 +52,7 @@ void Application::runLoop() {
 
         SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
-        mRenderCallback();
+        mUpdateCallback();
 
         SDL_RenderPresent(mRenderer);
         //todo: handle frame cap here

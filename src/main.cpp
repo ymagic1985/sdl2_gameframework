@@ -3,12 +3,14 @@
 
 // C++ Standard Libraries
 #include <iostream>
-#include <glad/glad.h>
-// Third-party library
-#include <SDL2/SDL.h>
 #include <memory>
 #include <vector>
-//
+
+// Third-party library
+#include <SDL2/SDL.h>
+#include <glad/glad.h> //OpenGL
+#include <entt.hpp> //Entt ECS header
+
 #include "application.h"
 #include "command.h"
 #include "configure.h"
@@ -16,13 +18,10 @@
 #include "waterEffect.h"
 #include "gameObject.h"
 #include "input.h"
+#include "animatedSprite.h"
 
-Application* app;// = new Application("SDL Game Framework", 0, 0, 640, 480);
-WaterInputComponent* wInput;// = new WaterInputComponent();
-WaterPyhsicsComponent* wPyhsics;// = new WaterPyhsicsComponent();
-WaterGraphicsComponent* wGraphics;// = new WaterGraphicsComponent(app->getRenderer(), "../images/pool2.bmp");
-
-GameObject* water;// = new GameObject(wInput, wPyhsics, wGraphics);
+Application* app;
+entt::registry entt_registry;
 
 void initializeConfig() {
     Configure::getInstance().setWindowWidth(640);
@@ -50,8 +49,44 @@ void handleEvents() {
     }
 }
 
-void handleRendering() {
-    water->update(app->getDeltaTime());
+int frame = 0;
+int dir = 0;
+std::vector< std::vector<int> > vels = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}, {-1, -1}, {1, -1}, {-1, 1}, {1, 1}, {0, 0}};
+int vIndex = 0;
+int x{100}, y{100};
+void handleUpdate() {
+    //water->update(app->getDeltaTime());
+    auto view = entt_registry.view<GameObject>();
+
+    for(auto entity : view) {
+       auto &gameObject = view.get<GameObject>(entity);
+       gameObject.update(app->getDeltaTime());
+    }
+
+    if(Input::isKeyboardPressed(SDL_SCANCODE_UP)) {
+        if(Input::isKeyboardPressed(SDL_SCANCODE_LEFT)) { dir = 3; vIndex = 4; frame++; }
+        else if (Input::isKeyboardPressed(SDL_SCANCODE_RIGHT)) { dir = 5; vIndex = 5; frame++; }
+        else { dir = 4; vIndex = 1; frame++; } 
+    }
+    else if(Input::isKeyboardPressed(SDL_SCANCODE_DOWN)) { 
+        if(Input::isKeyboardPressed(SDL_SCANCODE_LEFT)) { dir = 1; vIndex = 6; frame++; }
+        else if (Input::isKeyboardPressed(SDL_SCANCODE_RIGHT)) { dir = 7; vIndex = 7; frame++; }
+        else { dir = 0; vIndex = 0; frame++; }
+    }
+    else if(Input::isKeyboardPressed(SDL_SCANCODE_LEFT)) { dir = 2; vIndex = 2; frame++; }
+    else if(Input::isKeyboardPressed(SDL_SCANCODE_RIGHT)) { dir = 6; vIndex = 3; frame++; }
+    else { vIndex = 8; };
+    
+    x += vels[vIndex][0];
+    y += vels[vIndex][1];
+    auto view2 = entt_registry.view<AnimatedSprite>();
+    for(auto entity : view2) {
+        auto &sprite = view2.get<AnimatedSprite>(entity);
+        sprite.playFrame(0, 92*dir, 48, 92, frame/4);
+        if(frame > 48) frame = 0;
+        sprite.draw(x, y, 48, 92);
+        sprite.render(app->getRenderer());
+    }
 }
                      
 
@@ -59,18 +94,24 @@ void handleRendering() {
 Input* Input::s_Instance = new MacInput();
 
 int main(int argc, char* argv[]){
-    
+   
     app = new Application("SDL Game Framework", 0, 0, 640, 480);
-    wInput = new WaterInputComponent();
-    wPyhsics = new WaterPyhsicsComponent();
-    wGraphics = new WaterGraphicsComponent(app->getRenderer(), "../images/pool2.bmp");
-    water = new GameObject(wInput, wPyhsics, wGraphics);
+   
+    const auto entity = entt_registry.create();
+    entt_registry.emplace<WaterInputComponent>(entity);
+    entt_registry.emplace<WaterPyhsicsComponent>(entity);
+    entt_registry.emplace<WaterGraphicsComponent>(entity, app->getRenderer(), "../images/pool2.bmp");
+    entt_registry.emplace<GameObject>(entity, &entt_registry.get<WaterInputComponent>(entity),
+                                              &entt_registry.get<WaterPyhsicsComponent>(entity),
+                                              &entt_registry.get<WaterGraphicsComponent>(entity));
+   
+    const auto player = entt_registry.create();
+    entt_registry.emplace<AnimatedSprite>(player, app->getRenderer(), "../images/womanSprite.bmp");
     
     app->setEventCallback(handleEvents);
-    app->setRenderCallback(handleRendering);
+    app->setUpdateCallback(handleUpdate);
     app->runLoop();
     delete app;
-    delete water;
 
     return 0;
 }

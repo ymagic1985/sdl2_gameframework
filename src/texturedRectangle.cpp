@@ -1,5 +1,3 @@
-#include <memory>
-
 #include "resourceManager.h"
 #include "texturedRectangle.h"
 

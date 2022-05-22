@@ -9,10 +9,10 @@ GameObject::GameObject(InputComponent* input, PhysicsComponent* physics, Graphic
  }
 
 GameObject::~GameObject() {
-    for(auto com : mComponents) {
+   /* for(auto com : mComponents) {
         delete com;
     }
-    mComponents.clear();
+    mComponents.clear();*/
 }
 
 GameObject::GameObject(const GameObject& rhs) {
