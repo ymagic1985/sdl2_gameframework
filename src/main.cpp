@@ -19,9 +19,12 @@
 #include "gameObject.h"
 #include "input.h"
 #include "animatedSprite.h"
+#include "scene.h"
+#include "entity.h"
 
 Man520::Application* app;
 entt::registry entt_registry;
+Man520::Scene* cur_scene = new Man520::Scene();
 
 void initializeConfig() {
     Configure::getInstance().setWindowWidth(640);
@@ -104,7 +107,8 @@ int main(int argc, char* argv[]){
     entt_registry.emplace<Man520::GameObject>(entity, &entt_registry.get<Man520::WaterInputComponent>(entity),
                                               &entt_registry.get<Man520::WaterPyhsicsComponent>(entity),
                                               &entt_registry.get<Man520::WaterGraphicsComponent>(entity));
-   
+    //auto player2 = cur_scene->createEntity();
+    //player2.addComponent<Man520::AnimatedSprite>(app->getRenderer(), "../images/womanSprite.bmp");
     const auto player = entt_registry.create();
     entt_registry.emplace<Man520::AnimatedSprite>(player, app->getRenderer(), "../images/womanSprite.bmp");
     

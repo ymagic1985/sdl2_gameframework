@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <SDL2/SDL.h>
 
 namespace Man520 {
@@ -31,5 +32,10 @@ namespace Man520 {
             virtual void receive(int message) override {};
             virtual void update(GameObject* obj) = 0;
     };
-
+    
+    class TagComponent : public Component {
+        public:
+            void receive(int message) override {}
+            std::string mTag;
+     };
 }

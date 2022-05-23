@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "application.h"
+#include "log.h"
 
 namespace Man520 {
 
@@ -16,10 +17,13 @@ namespace Man520 {
     }
 
     void Application::initialize() {
+        //initialize logging system;
+        Log::init();
+
         if(SDL_Init(SDL_INIT_VIDEO) < 0) {
-            std::cout<<"SDL could not be initialized: "<<SDL_GetError()<<"\n";
+            MAN520_CORE_ERROR("SDL could not be initialized!");
         } else {
-            std::cout<<"SDL video system is ready to go!\n";
+            MAN520_CORE_INFO("SDL video system is ready to go!");      
         }
         
         mWindow = SDL_CreateWindow(mTitle, 
