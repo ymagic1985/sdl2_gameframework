@@ -24,7 +24,7 @@
 
 Man520::Application* app;
 entt::registry entt_registry;
-Man520::Scene* cur_scene = new Man520::Scene();
+//Man520::Scene* cur_scene = new Man520::Scene();
 
 void initializeConfig() {
     Configure::getInstance().setWindowWidth(640);

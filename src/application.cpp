@@ -12,6 +12,8 @@ namespace Man520 {
 
 
     Application::~Application() {
+        delete mTitle;
+        SDL_DestroyRenderer(mRenderer);
         SDL_DestroyWindow(mWindow);
         SDL_Quit();
     }
@@ -53,10 +55,10 @@ namespace Man520 {
             
             mEventCallback();
             
-            SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+           // SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
             SDL_RenderClear(mRenderer);
 
-            SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+           // SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
             mUpdateCallback();
 

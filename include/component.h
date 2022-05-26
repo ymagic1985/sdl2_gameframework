@@ -2,6 +2,7 @@
 
 #include <string>
 #include <SDL2/SDL.h>
+#include "base.h"
 
 namespace Man520 {
 
@@ -37,5 +38,46 @@ namespace Man520 {
         public:
             void receive(int message) override {}
             std::string mTag;
-     };
+    };
+
+/**************Data Components*********************/
+
+    struct PostionComponent {
+        int x;
+        int y;
+    };
+
+
+    struct TextureComponent {
+        Ref<SDL_Texture> texture;
+        Ref<SDL_Rect> src;
+        Ref<SDL_Rect> dst;
+        int frame;
+    };
+
+/*************Logic Components********************/ 
+
+    struct RenderComponent {
+        TextureComponent* txtComp;
+        void render(SDL_Renderer* renderer) {
+            SDL_RenderCopy(renderer, 
+                           txtComp->texture.get(),
+                           txtComp->src.get(),
+                           txtComp->dst.get());
+        }
+
+        void draw(int x, int y, int w, int h) {
+            txtComp->dst->x = x;
+            txtComp->dst->y = y;
+            txtComp->dst->w = w;
+            txtComp->dst->h = h;
+        }
+
+        void playFrame(int x, int y, int w, int h, int frame) {
+            txtComp->src->x = x + w * frame;
+            txtComp->src->y = y;
+            txtComp->src->w = w;
+            txtComp->src->h = h;
+        }
+    };
 }

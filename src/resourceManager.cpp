@@ -4,6 +4,10 @@ namespace Man520 {
 
     ResourceManager::ResourceManager() {
     }
+    
+    ResourceManager::~ResourceManager() {
+        clear();
+    }
 
     ResourceManager::ResourceManager(ResourceManager const&) {
     }
@@ -25,5 +29,13 @@ namespace Man520 {
         }
         return m_surfaces[name];
     }
+
+    void ResourceManager::clear() {
+        auto it = m_surfaces.begin();
+        for(; it != m_surfaces.end(); it++) {
+            SDL_FreeSurface(it->second);
+        }
+        m_surfaces.clear();
+    } 
 
 }

@@ -4,6 +4,7 @@
 #include "waterEffect.h"
 #include "texturedRectangle.h"
 #include "gameObject.h"
+#include "log.h"
 
 namespace Man520 {
 
@@ -36,11 +37,11 @@ namespace Man520 {
         acceleration >>= 8;
         switch(m_type) {
             case 1:
-                std::cout<<"Horizontal acceleration: "<<acceleration<<"   velocity: "<<mHori_velocity<<"\n";
+                //MAN520_INFO("Horizontal acceleration: {0:d}    velocity: {1:f}", acceleration, mHori_velocity);
                 mHori_velocity += (int)acceleration;
                 break;
             case 2:
-                std::cout<<"Vertical acceleration: "<<acceleration<<"   velocity: "<<mVert_velocity<<"\n";
+                //MAN520_CORE_INFO("Vertical acceleration: {0:d}    velocity: {1:f}", acceleration, mVert_velocity);
                 mVert_velocity += (int)acceleration;
                 break;
         }
@@ -52,10 +53,8 @@ namespace Man520 {
         
         if(x > 640) x = -640;
         if(y > 480) y = -480;
-        //std::cout<<"Horizontal: "<<mHori_velocity<<"  Vertical: "<<mVert_velocity<<"\n";
         obj->setPosX(x);
         obj->setPosY(y);
-        //std::cout<<"X: "<<obj->getPosX() <<"  Y: "<<obj->getPosY()<<"\n";
     }
 
     WaterGraphicsComponent::WaterGraphicsComponent(SDL_Renderer* renderer, const std::string& name) : mRenderer(renderer) {

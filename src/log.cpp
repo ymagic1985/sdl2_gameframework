@@ -19,7 +19,7 @@ namespace Man520 {
         logSinks[0]->set_pattern("%^[%T] %n: %v%$");
         logSinks[1]->set_pattern("[%T] [%l] %n: %v");
 
-        sCoreLogger = createRef<spdlog::logger>("Man520", begin(logSinks), end(logSinks));
+        sCoreLogger = createRef<spdlog::logger>("CORE", begin(logSinks), end(logSinks));
         spdlog::register_logger(sCoreLogger);
         sCoreLogger->set_level(spdlog::level::trace);
         sCoreLogger->flush_on(spdlog::level::trace);
