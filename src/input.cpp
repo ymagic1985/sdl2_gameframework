@@ -3,8 +3,6 @@
 
 #include "input.h"
 
-//Input* Input::s_Instance = nullptr;
-
 bool MacInput::isKeyboardPressedImpl(int scancode) {
     const Uint8* state = SDL_GetKeyboardState(NULL);
     return state[scancode];
@@ -13,16 +11,15 @@ bool MacInput::isKeyboardPressedImpl(int scancode) {
 bool MacInput::isMouseClicked(int button) {
     int x, y; 
     
-    //SDL_PumpEvents();
     return ((SDL_GetMouseState(&x,&y) & SDL_BUTTON(button)) != 0);
 }
 
 bool MacInput::isMouseLeftPressedImpl() {
-    return isMouseClicked(1);
+    return isMouseClicked(SDL_BUTTON_LMASK);
 }
 
 bool MacInput::isMouseMiddlePressedImpl() {
-    return isMouseClicked(2);
+    return isMouseClicked(SDL_BUTTON_MMASK);
 }
 
 bool MacInput::isMouseRightPressedImpl() {

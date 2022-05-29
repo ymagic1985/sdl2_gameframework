@@ -12,7 +12,6 @@ namespace Man520 {
 
 
     Application::~Application() {
-        delete mTitle;
         SDL_DestroyRenderer(mRenderer);
         SDL_DestroyWindow(mWindow);
         SDL_Quit();
