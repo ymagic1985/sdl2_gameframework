@@ -1,8 +1,6 @@
 
-#include <iostream>
-
 #include "application.h"
-#include "log.h"
+
 
 namespace Man520 {
 

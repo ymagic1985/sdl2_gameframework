@@ -1,7 +1,7 @@
 #pragma once
 
+#include "mzpch.h"
 #include <SDL2/SDL.h>
-#include <string>
 
 namespace Man520 {
 

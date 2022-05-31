@@ -1,11 +1,8 @@
 #pragma once
 
-#include <vector>
-#include <memory>
-#include <string>
-
 #include <SDL2/SDL.h>
 
+#include "mzpch.h"
 #include "component.h"
 namespace Man520 {
 

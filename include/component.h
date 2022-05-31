@@ -1,8 +1,7 @@
 #pragma once
 
-#include <string>
+#include "mzpch.h"
 #include <SDL2/SDL.h>
-#include "base.h"
 
 namespace Man520 {
 

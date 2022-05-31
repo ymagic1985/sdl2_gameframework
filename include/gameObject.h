@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include "mzpch.h"
 #include "component.h"
 
 namespace Man520 {

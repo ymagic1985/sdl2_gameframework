@@ -1,10 +1,5 @@
 //On macOS compile with:
-// g++ -std=c++17 main.cpp configure.cpp command.cpp texturedRectangle.cpp glad/src/glad.c -I ./glad/include -o prog -lsdl2  
-
-// C++ Standard Libraries
-#include <iostream>
-#include <memory>
-#include <vector>
+// g++ -std=c++17 main.cpp configure.cpp command.cpp texturedRectangle.cpp glad/src/glad.c -I ./glad/include -o prog -lsdl2
 
 // Third-party library
 #include <SDL2/SDL.h>
