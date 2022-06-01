@@ -4,6 +4,8 @@
 
 namespace Man520 {
 
+    SDL_Renderer* Application::sRenderer = nullptr;
+
     Application::Application(const char* title, int x, int y, int w, int h) : mTitle(title), mWindowX(x), mWindowY(y), mWindowWidth(w), mWindowHeight(h), mIsAppRunning(true), mDeltaTime(0), mMaxFrameRate(16) {
         initialize();
     }
@@ -13,7 +15,7 @@ namespace Man520 {
     }
 
     Application::~Application() {
-        SDL_DestroyRenderer(mRenderer);
+        SDL_DestroyRenderer(sRenderer);
         SDL_DestroyWindow(mWindow);
         SDL_Quit();
     }
@@ -35,7 +37,7 @@ namespace Man520 {
                 mWindowHeight,
                 SDL_WINDOW_SHOWN);
 
-        mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);
+        sRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);
         
     }
 
@@ -55,7 +57,7 @@ namespace Man520 {
             
             mEventCallback();
             
-            SDL_RenderClear(mRenderer);
+            SDL_RenderClear(sRenderer);
   
             //update layers
             for(auto layer : mLayerStack) {
@@ -64,12 +66,16 @@ namespace Man520 {
 
             mUpdateCallback();
 
-            SDL_RenderPresent(mRenderer);
+            SDL_RenderPresent(sRenderer);
             //todo: handle frame cap here
             mDeltaTime = SDL_GetTicks() - start;
             if(mDeltaTime < mMaxFrameRate) 
                 SDL_Delay(mMaxFrameRate - mDeltaTime);
         }
+    }
+
+    SDL_Renderer* Application::getRenderer() {
+        return sRenderer;
     }
 
     void Application::quit() {

@@ -35,13 +35,13 @@ namespace  Man520 {
             inline int getMouseX() const { return mMouseX; }
             inline int getMouseY() const { return mMouseY; }
             inline int getDeltaTime() const { return mDeltaTime; }
-            inline SDL_Renderer* getRenderer() { return mRenderer; }
+            static SDL_Renderer* getRenderer();
         private:
             void runLoop();
 
             ApplicationCommandLineArgs mCommandLineArgs;
-            SDL_Window* mWindow = nullptr;
-            SDL_Renderer* mRenderer;
+            SDL_Window* mWindow{nullptr};
+            static SDL_Renderer* sRenderer;
             LayerStack mLayerStack;
             const char* mTitle;
             std::function<void(void)> mEventCallback;

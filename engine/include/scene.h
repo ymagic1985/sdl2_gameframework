@@ -14,7 +14,7 @@ namespace Man520 {
         Entity createEntity();
         void destroyEntity(Entity entity);
         virtual void update() = 0;
-    private:
+    protected:
         entt::registry mRegistry;
         uint32_t mViewportWidth{0}, mViewportHeight{0};
     

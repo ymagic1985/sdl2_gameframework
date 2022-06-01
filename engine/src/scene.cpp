@@ -1,5 +1,6 @@
 #include "scene.h"
 #include "entity.h"
+#include "animatedSprite.h"
 
 namespace Man520 {
     Scene::Scene() {

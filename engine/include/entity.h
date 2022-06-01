@@ -1,6 +1,7 @@
 #pragma once
 
 #include "entt.hpp"
+#include <cassert>
 
 namespace Man520 {
     
@@ -13,15 +14,36 @@ namespace Man520 {
         Entity(const Entity& rhs) = default;
 
         template<typename T, typename... Args>
-        T& addComponent(Args&&... args);
+        T& addComponent(Args&&... args) {
+            //TODO:: assert if component has already been added
+            assert(!this->hasComponent<T>());
+            T& component = mScene->mRegistry.emplace<T>(mEntityHandle, std::forward<Args>(args)...);
+            //mScene onComponentAdded Maybe
+            return component;
+        }
+
         template<typename T>
-        T& getComponent();
+        T& getComponent() {
+            assert(this->hasComponent<T>());
+            return mScene->mRegistry.get<T>(mEntityHandle);
+        }
+
         template<typename T>
-        bool hasComponent();
+        bool hasComponent() {
+            return mScene->mRegistry.any_of<T>(mEntityHandle);
+        }
+
         template<typename... T> 
-        bool hasAllComponent();
+        bool hasAllComponent() {
+            return mScene->mRegistry.all_of<T...>(mEntityHandle);
+        }
+
         template<typename T> 
-        void removeComponent();
+        void removeComponent() {
+            assert(this->hasComponent<T>());
+            mScene->mRegistry.remove<T>(mEntityHandle);
+        }
+
         bool isOrphan() const;
 
         operator bool() const { return mEntityHandle != entt::null; }
