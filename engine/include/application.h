@@ -5,16 +5,27 @@
 #include "layerStack.h"
 #include <SDL2/SDL.h>
 
+int main(int argc, char* argv[]);
+
 namespace  Man520 {
+
+    struct ApplicationCommandLineArgs {
+        int Count = 0;
+        char** Args = nullptr;
+
+        const char* operator[](int index) const {
+                return Args[index];
+        }
+    };
 
     class Application {
         public:
             Application(const char* title, int x, int y, int w, int h);
-            ~Application();
+            Application(const char* title = "Man520 Engine", ApplicationCommandLineArgs args = ApplicationCommandLineArgs());
+            virtual ~Application();
             void initialize();
             void setEventCallback(std::function<void(void)> func);
             void setUpdateCallback(std::function<void(void)> func);
-            void runLoop();
             void quit();
 
             void pushLayer(Layer* layer);
@@ -24,10 +35,13 @@ namespace  Man520 {
             inline int getMouseX() const { return mMouseX; }
             inline int getMouseY() const { return mMouseY; }
             inline int getDeltaTime() const { return mDeltaTime; }
-            inline SDL_Renderer* getRenderer() const { return mRenderer; }
+            inline SDL_Renderer* getRenderer() { return mRenderer; }
         private:
+            void runLoop();
+
+            ApplicationCommandLineArgs mCommandLineArgs;
             SDL_Window* mWindow = nullptr;
-            SDL_Renderer*  mRenderer = nullptr;
+            SDL_Renderer* mRenderer;
             LayerStack mLayerStack;
             const char* mTitle;
             std::function<void(void)> mEventCallback;
@@ -41,6 +55,8 @@ namespace  Man520 {
             Uint32 mDeltaTime;
             Uint32 mMaxFrameRate;
             bool mIsAppRunning;
+            friend int ::main(int argc, char* argv[]);
     };
-
+    // To be defined in Client
+    Application* CreateApplication(ApplicationCommandLineArgs args);
 }

@@ -20,8 +20,4 @@ namespace Man520 {
     void Scene::destroyEntity(Entity entity) {
         mRegistry.destroy(entity);
     }
-
-    void Scene::update() {
-    }
-
 }

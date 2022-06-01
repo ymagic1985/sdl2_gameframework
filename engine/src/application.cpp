@@ -8,6 +8,9 @@ namespace Man520 {
         initialize();
     }
 
+    Application::Application(const char* title, ApplicationCommandLineArgs args) : Application(title, 0, 0, 640, 480) {
+        mCommandLineArgs = args;
+    }
 
     Application::~Application() {
         SDL_DestroyRenderer(mRenderer);

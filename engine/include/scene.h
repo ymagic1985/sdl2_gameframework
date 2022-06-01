@@ -9,11 +9,11 @@ namespace Man520 {
     class Scene {
     public:
         Scene();
-        ~Scene();
+        virtual ~Scene();
 
         Entity createEntity();
         void destroyEntity(Entity entity);
-        void update();
+        virtual void update() = 0;
     private:
         entt::registry mRegistry;
         uint32_t mViewportWidth{0}, mViewportHeight{0};
