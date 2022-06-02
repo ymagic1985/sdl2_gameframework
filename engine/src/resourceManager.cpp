@@ -25,6 +25,7 @@ namespace Man520 {
         auto it = m_surfaces.find(name);
         if(it == m_surfaces.end()) {
             SDL_Surface* surface = SDL_LoadBMP(name.c_str());
+            if(surface == nullptr) MAN520_CORE_ERROR("Image file({0}) cannot be found!", name);
             m_surfaces.insert(std::make_pair(name, surface));
         }
         return m_surfaces[name];

@@ -33,7 +33,7 @@ void setPixel(SDL_Surface* surface, int x, int y, uint8_t r, uint8_t g, uint8_t 
 }
 
 void handleEvents() {
-    SDL_Event event;
+/*    SDL_Event event;
     while (SDL_PeepEvents(&event, 1, SDL_GETEVENT, 0, SDL_LASTEVENT) == 1){
         //Handle each specific event
         switch(event.type) {
@@ -41,7 +41,7 @@ void handleEvents() {
                 app->quit();
                 break;
         }
-    }
+    }*/
 }
 
 void handleUpdate() {

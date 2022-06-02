@@ -16,7 +16,7 @@ namespace Man520 {
 
     Application::~Application() {
         SDL_DestroyRenderer(sRenderer);
-        SDL_DestroyWindow(mWindow);
+//        SDL_DestroyWindow(mWindow);
         SDL_Quit();
     }
 
@@ -30,14 +30,14 @@ namespace Man520 {
             MAN520_CORE_INFO("SDL video system is ready to go!");      
         }
         
-        mWindow = SDL_CreateWindow(mTitle, 
+        mWindow = createScope<Window>(std::string(mTitle), mWindowWidth, mWindowHeight);
+        /*mWindow = SDL_CreateWindow(mTitle, 
                 mWindowX,
                 mWindowY,
                 mWindowWidth,
                 mWindowHeight,
-                SDL_WINDOW_SHOWN);
-
-        sRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);
+                SDL_WINDOW_SHOWN);*/
+        sRenderer = SDL_CreateRenderer(mWindow->getSDLWindow(), -1, SDL_RENDERER_ACCELERATED);
         
     }
 
@@ -52,27 +52,49 @@ namespace Man520 {
     void Application::runLoop() {
         while(mIsAppRunning) {
             Uint32 start = SDL_GetTicks();
-            SDL_PumpEvents();
-            SDL_GetMouseState(&mMouseX, &mMouseY);
-            
-            mEventCallback();
-            
-            SDL_RenderClear(sRenderer);
-  
-            //update layers
-            for(auto layer : mLayerStack) {
-                layer->onUpdate();
+            dispatchSDLEvents();
+            //mEventCallback();
+            if(!mWindow->isMinimized()) {
+                SDL_RenderClear(sRenderer);
+      
+                //update layers
+                for(auto layer : mLayerStack) {
+                    layer->onUpdate();
+                }
+
+                mUpdateCallback();
+
+                SDL_RenderPresent(sRenderer);
+                
+                //todo: handle frame cap here
+                mDeltaTime = SDL_GetTicks() - start;
+                if(mDeltaTime < mMaxFrameRate) 
+                    SDL_Delay(mMaxFrameRate - mDeltaTime);
             }
-
-            mUpdateCallback();
-
-            SDL_RenderPresent(sRenderer);
-            //todo: handle frame cap here
-            mDeltaTime = SDL_GetTicks() - start;
-            if(mDeltaTime < mMaxFrameRate) 
-                SDL_Delay(mMaxFrameRate - mDeltaTime);
         }
     }
+
+    void Application::dispatchSDLEvents() {
+        SDL_PumpEvents();
+        SDL_GetMouseState(&mMouseX, &mMouseY);
+        SDL_Event event;
+        while (SDL_PeepEvents(&event, 1, SDL_GETEVENT, 0, SDL_LASTEVENT) == 1){
+             //Handle each specific event
+            switch(event.type) {
+            case SDL_QUIT:
+                this->quit();
+                break;
+            case SDL_WINDOWEVENT:
+                mWindow->handleEvent(event);
+                break;
+            case SDL_KEYDOWN:
+                if(event.key.keysym.sym == SDLK_RETURN)
+                    mWindow->fullScreenSwitch();
+                break;
+            }
+        }
+    }
+
 
     SDL_Renderer* Application::getRenderer() {
         return sRenderer;

@@ -3,6 +3,7 @@
 #include "layer.h"
 #include "mzpch.h"
 #include "layerStack.h"
+#include "window.h"
 #include <SDL2/SDL.h>
 
 int main(int argc, char* argv[]);
@@ -26,8 +27,8 @@ namespace  Man520 {
             void initialize();
             void setEventCallback(std::function<void(void)> func);
             void setUpdateCallback(std::function<void(void)> func);
+            void dispatchSDLEvents();
             void quit();
-
             void pushLayer(Layer* layer);
             void pushOverlay(Layer* overlay);
             void popLayer(Layer* layer);
@@ -40,7 +41,7 @@ namespace  Man520 {
             void runLoop();
 
             ApplicationCommandLineArgs mCommandLineArgs;
-            SDL_Window* mWindow{nullptr};
+            Scope<Window> mWindow;
             static SDL_Renderer* sRenderer;
             LayerStack mLayerStack;
             const char* mTitle;
