@@ -1,5 +1,6 @@
 
 #include "application.h"
+#include "assert.h"
 
 
 namespace Man520 {
@@ -23,7 +24,7 @@ namespace Man520 {
     void Application::initialize() {
         //initialize logging system;
         Log::init();
-
+        
         if(SDL_Init(SDL_INIT_VIDEO) < 0) {
             MAN520_CORE_ERROR("SDL could not be initialized!");
         } else {

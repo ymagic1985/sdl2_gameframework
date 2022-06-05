@@ -16,6 +16,7 @@
 #include "animatedSprite.h"
 #include "scene.h"
 #include "entity.h"
+#include "mzpch.h"
 
 Man520::Application* app;
 void initializeConfig() {
@@ -53,8 +54,7 @@ Input* Input::s_Instance = new MacInput();
 
 int main(int argc, char* argv[]){
    
-    app = Man520::CreateApplication({argc, argv});//new Man520::Application("SDL Game Framework", 0, 0, 640, 480);   
-   
+    app = Man520::CreateApplication({argc, argv});//new Man520::Application("SDL Game Framework", 0, 0, 640, 480);     
     app->setEventCallback(handleEvents);
     app->setUpdateCallback(handleUpdate);
     app->runLoop();

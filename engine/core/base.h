@@ -18,6 +18,8 @@
 	#define MAN520_DEBUGBREAK()
 #endif
 
+#define MAN520_EXPAND_MACRO(x) x
+#define MAN520_STRINGIFY_MACRO(x) #x
 
 namespace Man520 {
   
@@ -35,4 +37,7 @@ namespace Man520 {
       return std::make_shared<T>(std::forward<Args>(args)...);
   }
 
-}  
+}
+
+#include "assert.h"
+#include "log.h"
