@@ -1,12 +1,12 @@
 #include "sandboxScene.h" 
-#include "animatedSprite.h"
-#include "entity.h"
-#include "input.h"
-#include "application.h"
+#include "core/animatedSprite.h"
+#include "core/entity.h"
+#include "core/input.h"
+#include "core/application.h"
 
 //just for the purpose of testing:
-#include "gameObject.h"
-#include "waterEffect.h"
+#include "core/gameObject.h"
+#include "core/waterEffect.h"
 
 
 //Input* Input::s_Instance = new MacInput();

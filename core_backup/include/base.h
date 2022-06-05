@@ -2,6 +2,23 @@
 
 #include <memory>
 
+#include "platformDetection.h"
+
+#ifdef MAN520_DEBUG
+	#if defined(MAN520_PLATFORM_WINDOWS)
+		#define MAN520_DEBUGBREAK() __debugbreak()
+	#elif defined(MAN520_PLATFORM_LINUX) || defined(MAN520_PLATFORM_MACOS)
+ 		#include <signal.h>
+		#define MAN520_DEBUGBREAK() raise(SIGTRAP)
+	#else
+		#error "Platform doesn't support debugbreak yet!"
+	#endif
+	#define MAN520_ENABLE_ASSERTS
+#else
+	#define MAN520_DEBUGBREAK()
+#endif
+
+
 namespace Man520 {
   
   template<typename T>

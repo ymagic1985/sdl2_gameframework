@@ -1,4 +1,4 @@
-#include "scene.h"
+#include "core/scene.h"
 
 class SandboxScene : public Man520::Scene {
     public:
