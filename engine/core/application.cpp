@@ -24,9 +24,9 @@ namespace Man520 {
     void Application::initialize() {
         //initialize logging system;
         Log::init();
-        
+
         if(SDL_Init(SDL_INIT_VIDEO) < 0) {
-            MAN520_CORE_ERROR("SDL could not be initialized!");
+            MAN520_CORE_ASSERT(false, std::string("Unable to initialize SDL video: ") + std::string(SDL_GetError()));
         } else {
             MAN520_CORE_INFO("SDL video system is ready to go!");      
         }
