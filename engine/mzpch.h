@@ -11,6 +11,6 @@
 #include <_types/_uint32_t.h>
 #include <sstream>
 
-#include "log.h"
-#include "base.h"
+#include "core/log.h"
+#include "core/base.h"
 
