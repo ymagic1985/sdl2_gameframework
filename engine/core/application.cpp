@@ -1,7 +1,7 @@
 
 #include "application.h"
 #include "assert.h"
-
+#include "renderer/renderer.h"
 
 namespace Man520 {
 
@@ -17,12 +17,10 @@ namespace Man520 {
 
     Application::~Application() {
         SDL_DestroyRenderer(sRenderer);
-//        SDL_DestroyWindow(mWindow);
         SDL_Quit();
     }
 
     void Application::initialize() {
-        //initialize logging system;
         Log::init();
 
         if(SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -32,14 +30,8 @@ namespace Man520 {
         }
         
         mWindow = createScope<Window>(std::string(mTitle), mWindowWidth, mWindowHeight);
-        /*mWindow = SDL_CreateWindow(mTitle, 
-                mWindowX,
-                mWindowY,
-                mWindowWidth,
-                mWindowHeight,
-                SDL_WINDOW_SHOWN);*/
-        sRenderer = SDL_CreateRenderer(mWindow->getSDLWindow(), -1, SDL_RENDERER_ACCELERATED);
-        
+        Renderer::init();
+        //sRenderer = SDL_CreateRenderer(mWindow->getSDLWindow(), -1, SDL_RENDERER_ACCELERATED); 
     }
 
     void Application::setEventCallback(std::function<void(void)> func) {
@@ -54,10 +46,10 @@ namespace Man520 {
         while(mIsAppRunning) {
             Uint32 start = SDL_GetTicks();
             dispatchSDLEvents();
-            //mEventCallback();
             if(!mWindow->isMinimized()) {
-                SDL_RenderClear(sRenderer);
-      
+        //      SDL_RenderClear(sRenderer);
+		RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+		RenderCommand::clear();
                 //update layers
                 for(auto layer : mLayerStack) {
                     layer->onUpdate();
@@ -65,8 +57,8 @@ namespace Man520 {
 
                 mUpdateCallback();
 
-                SDL_RenderPresent(sRenderer);
-                
+       //        SDL_RenderPresent(sRenderer);
+                mWindow->onUpdate();               
                 //todo: handle frame cap here
                 mDeltaTime = SDL_GetTicks() - start;
                 if(mDeltaTime < mMaxFrameRate) 
@@ -80,18 +72,17 @@ namespace Man520 {
         SDL_GetMouseState(&mMouseX, &mMouseY);
         SDL_Event event;
         while (SDL_PeepEvents(&event, 1, SDL_GETEVENT, 0, SDL_LASTEVENT) == 1){
-             //Handle each specific event
             switch(event.type) {
-            case SDL_QUIT:
-                this->quit();
-                break;
-            case SDL_WINDOWEVENT:
-                mWindow->handleEvent(event);
-                break;
-            case SDL_KEYDOWN:
-                if(event.key.keysym.sym == SDLK_RETURN)
-                    mWindow->fullScreenSwitch();
-                break;
+                case SDL_QUIT:
+                    this->quit();
+                    break;
+                case SDL_WINDOWEVENT:
+                    mWindow->handleEvent(event);
+                    break;
+                case SDL_KEYDOWN:
+                    if(event.key.keysym.sym == SDLK_RETURN)
+                        mWindow->fullScreenSwitch();
+                    break;
             }
         }
     }

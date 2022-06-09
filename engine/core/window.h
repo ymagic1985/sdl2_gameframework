@@ -1,10 +1,12 @@
 #pragma once
 #include "mzpch.h"
+#include "renderer/rendererAPI.h"
+#include "renderer/graphicsContext.h"
 
 class SDL_Window;
 typedef union SDL_Event SDL_Event;
 namespace Man520 {
-    
+
     struct WindowProps {
         std::string mTitle;
         uint32_t mWidth;
@@ -15,7 +17,7 @@ namespace Man520 {
 
     class Window {
         public:
-            Window(const std::string& title, uint32_t w, uint32_t h); 
+            Window(const std::string& title, uint32_t w, uint32_t h, RendererAPI::API api = RendererAPI::API::OpenGL); 
 
             virtual ~Window();
 
@@ -32,6 +34,7 @@ namespace Man520 {
 
         private:
             SDL_Window* mWindow;
+            Scope<GraphicsContext> mContext;
             WindowProps mProps;
             //not used yet
             bool mKeyboardFocus = false;

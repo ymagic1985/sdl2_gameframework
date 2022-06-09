@@ -1,20 +1,29 @@
 #include "window.h" 
 #include "application.h"
+#include "renderer/renderer.h"
 
 #include <SDL2/SDL.h>
 namespace Man520 {
 
-    Window::Window(const std::string& title, uint32_t w, uint32_t h) {
+    Window::Window(const std::string& title, uint32_t w, uint32_t h, RendererAPI::API api) {
         mProps.mTitle = title;
         mProps.mWidth = w;
         mProps.mHeight = h;
 
+        uint32_t flags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
+        switch(api) {
+            case RendererAPI::API::OpenGL: flags |= SDL_WINDOW_OPENGL; break;
+            default: MAN520_CORE_ASSERT(false, "Unknown RendererAPI::API in Window()"); break;
+        }
+        //TODO: Switch graphics API
         mWindow = SDL_CreateWindow(title.c_str(), 
                 SDL_WINDOWPOS_UNDEFINED, 
                 SDL_WINDOWPOS_UNDEFINED,
                 w,
                 h,
-                SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+                flags);
+        mContext = GraphicsContext::create(mWindow);
+        mContext->init();
     }
     
     Window::~Window() {
@@ -33,11 +42,13 @@ namespace Man520 {
         case SDL_WINDOWEVENT_SIZE_CHANGED:
             mProps.mWidth = event.window.data1;
             mProps.mHeight = event.window.data2;
-            SDL_RenderPresent(Application::getRenderer());
+            Renderer::onWindowResize(mProps.mWidth, mProps.mHeight);
+            //SDL_RenderPresent(Application::getRenderer());
             break;
         //Repaint on exposure
         case SDL_WINDOWEVENT_EXPOSED:
-            SDL_RenderPresent(Application::getRenderer());
+            Renderer::onWindowResize(mProps.mWidth, mProps.mHeight);
+            //SDL_RenderPresent(Application::getRenderer());
             break;
         //Mouse entered window
         case SDL_WINDOWEVENT_ENTER:
@@ -73,6 +84,7 @@ namespace Man520 {
     }
 
     void Window::onUpdate() {
+        mContext->swapBuffers();
     }
 
 }
