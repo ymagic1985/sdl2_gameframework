@@ -5,6 +5,7 @@
 #include "layerStack.h"
 #include "window.h"
 #include <SDL2/SDL.h>
+#include "imgui/imguiLayer.h"
 
 int main(int argc, char* argv[]);
 
@@ -36,13 +37,17 @@ namespace  Man520 {
             inline int getMouseX() const { return mMouseX; }
             inline int getMouseY() const { return mMouseY; }
             inline int getDeltaTime() const { return mDeltaTime; }
+            inline Window& getWindow() { return *mWindow; }
             static SDL_Renderer* getRenderer();
+            static Application& get() { return *sInstance; }
         private:
             void runLoop();
-
+                            
+            static Application* sInstance;
             ApplicationCommandLineArgs mCommandLineArgs;
             Scope<Window> mWindow;
             static SDL_Renderer* sRenderer;
+            ImguiLayer* mImguiLayer;
             LayerStack mLayerStack;
             const char* mTitle;
             std::function<void(void)> mEventCallback;

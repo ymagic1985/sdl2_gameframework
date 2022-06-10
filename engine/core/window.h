@@ -12,7 +12,7 @@ namespace Man520 {
         uint32_t mWidth;
         uint32_t mHeight;
 
-        WindowProps(const std::string& title = "Man520 Engine", uint32_t w = 640, uint32_t h = 480) : mTitle(title), mWidth(w), mHeight(h) {}
+        WindowProps(const std::string& title = "Man520 Engine", uint32_t w = 1280, uint32_t h = 720) : mTitle(title), mWidth(w), mHeight(h) {}
     };
 
     class Window {
@@ -29,6 +29,7 @@ namespace Man520 {
             void fullScreenSwitch();
             void handleEvent(SDL_Event& e);
             inline SDL_Window*& getSDLWindow() { return mWindow; }
+            inline GraphicsContext& getGraphicsContext() { return *mContext; }
             inline bool isFullscreen() const { return mFullScreen; }
             inline bool isMinimized() const { return mMinimized; }
 

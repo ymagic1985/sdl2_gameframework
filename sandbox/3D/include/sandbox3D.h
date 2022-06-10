@@ -13,7 +13,7 @@ class Sandbox3D : public Man520::Layer {
         virtual void onAttach() override;
         virtual void onDetach() override;
         virtual void onUpdate() override;
-        virtual void onEvent(SDL_Event& event) override;
+        virtual bool onEvent(SDL_Event& event) override;
     private:
         //temp :
         Man520::Ref<Man520::Shader> boxShader, lightCubeShader;

@@ -3,10 +3,10 @@
 COMPILER="g++"
 ARGS="-g -std=c++17 -D MAN520_DEBUG"
 SRC="$(find ./engine -type f -iregex ".*\.cpp")"
-LIBSRC="./lib/glad/src/glad.c ./lib/stb/stb_image.cpp"
+LIBSRC="./lib/glad/src/glad.c ./lib/stb/stb_image.cpp ./lib/imgui/*.cpp"
 CLIENTSRC="./sandbox/3D/src/*.cpp"
 CLIENTINC="-I./sandbox/3D/include"
-INCLUDE="-I./engine -I./lib/spdlog/include -I./lib/stb -I./lib/glm -I./lib/glad/include -I./lib/entt/include"
+INCLUDE="-I./engine -I./lib/spdlog/include -I./lib/stb -I./lib/glm -I./lib/glad/include -I./lib/entt/include -I./lib/imgui"
 BINARY="./bin/prog"
 LIBS="-lsdl2 -lsdl2_image -ldl"
 

@@ -13,7 +13,7 @@ namespace Man520 {
             virtual void onAttach() {}
             virtual void onDetach() {}
             virtual void onUpdate() {}
-            virtual void onEvent(SDL_Event& event) {}
+            virtual bool onEvent(SDL_Event& event) { return false; }
 
             inline const std::string& getName() const { return mName; }
         protected:

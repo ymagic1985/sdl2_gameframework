@@ -2,16 +2,22 @@
 #include "application.h"
 #include "assert.h"
 #include "renderer/renderer.h"
+#include <imgui.h>
 
 namespace Man520 {
 
     SDL_Renderer* Application::sRenderer = nullptr;
+    Application* Application::sInstance = nullptr;
 
     Application::Application(const char* title, int x, int y, int w, int h) : mTitle(title), mWindowX(x), mWindowY(y), mWindowWidth(w), mWindowHeight(h), mIsAppRunning(true), mDeltaTime(0), mMaxFrameRate(16) {
+        MAN520_CORE_ASSERT(sInstance == nullptr, "Application has been instantiated!");
+        sInstance = this;
         initialize();
+        mImguiLayer = new ImguiLayer();
+        pushOverlay(mImguiLayer);
     }
 
-    Application::Application(const char* title, ApplicationCommandLineArgs args) : Application(title, 0, 0, 640, 480) {
+    Application::Application(const char* title, ApplicationCommandLineArgs args) : Application(title, 0, 0, 1280, 720) {
         mCommandLineArgs = args;
     }
 
@@ -47,17 +53,26 @@ namespace Man520 {
             Uint32 start = SDL_GetTicks();
             dispatchSDLEvents();
             if(!mWindow->isMinimized()) {
-        //      SDL_RenderClear(sRenderer);
-		RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1 });
-		RenderCommand::clear();
+                //      SDL_RenderClear(sRenderer);
+                RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+                RenderCommand::clear();
                 //update layers
                 for(auto layer : mLayerStack) {
                     layer->onUpdate();
                 }
 
+                mImguiLayer->begin();
+                {
+                    //TODO:
+                    //for (Layer* layer : m_LayerStack)
+                    //layer->OnImGuiRender();
+                    ImGui::ShowDemoWindow();    
+                }
+                mImguiLayer->end();
+
                 mUpdateCallback();
 
-       //        SDL_RenderPresent(sRenderer);
+       //       SDL_RenderPresent(sRenderer);
                 mWindow->onUpdate();               
                 //todo: handle frame cap here
                 mDeltaTime = SDL_GetTicks() - start;
@@ -83,6 +98,14 @@ namespace Man520 {
                     if(event.key.keysym.sym == SDLK_RETURN)
                         mWindow->fullScreenSwitch();
                     break;
+             }
+
+            for(auto it = mLayerStack.rbegin(); it != mLayerStack.rend(); it++) {
+              MAN520_CORE_INFO("Order: {0}", (*it)->getName());
+              if((*it)->onEvent(event)) {
+                MAN520_CORE_INFO("Handled: {0}", (*it)->getName());
+                break;
+              }
             }
         }
     }

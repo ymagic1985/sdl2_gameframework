@@ -1,7 +1,7 @@
 
 #include "sandbox3D.h"
 
-Sandbox3D::Sandbox3D() : cubePositions{
+Sandbox3D::Sandbox3D() : Man520::Layer("Sandbox3D"), cubePositions{
   glm::vec3( 0.0f,  0.0f,  0.0f),
   glm::vec3( 2.0f,  5.0f, -15.0f),
   glm::vec3(-1.5f, -2.2f, -2.5f),
@@ -151,17 +151,17 @@ void Sandbox3D::onUpdate() {
   //if(printFPS) std::cout<<"FPS: "<<1/(float)app->getDeltaTime()*1000.0f<<"\n";
 }
 
-void Sandbox3D::onEvent(SDL_Event& event) {
-  if(event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_f) printFPS = !printFPS;
-  if(event.type == SDL_MOUSEWHEEL)
-  {
+bool Sandbox3D::onEvent(SDL_Event& event) {
+  if(event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_f) {
+      printFPS = !printFPS;
+      return true;
+  }else if(event.type == SDL_MOUSEWHEEL) {
       fov -= (float)event.wheel.y;
       if(fov > 45.0f) fov = 45.0f;
       if(fov < 1.0f) fov = 1.0f;
       wheelY = (float)event.wheel.y;
-  }
-
-  if(event.type == SDL_MOUSEMOTION){
+      return true;
+  }else if(event.type == SDL_MOUSEMOTION){
       int x, y;
       SDL_GetMouseState(&x,&y);
       
@@ -180,7 +180,9 @@ void Sandbox3D::onEvent(SDL_Event& event) {
       mouseY = (float)y;
           
       camera.lookAround(offsetX, offsetY);
+      return true;
   }
+  return false;
 }
 
 
