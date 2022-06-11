@@ -32,9 +32,12 @@ namespace Man520 {
             style.WindowRounding = 0.0f;
             style.Colors[ImGuiCol_WindowBg].w = 1.0f;
         }
-        auto& window = Application::get().getWindow();
-        SDL_GLContext gl_context = window.getSDLGLContext();
-        ImGui_ImplSDL2_InitForOpenGL(window.getSDLWindow(), gl_context);
+        SDL_Window* window = SDL_GL_GetCurrentWindow();
+        SDL_GLContext gl_context = SDL_GL_GetCurrentContext();
+
+        //auto& window = Application::get().getWindow();
+        //SDL_GLContext gl_context = window.getSDLGLContext();
+        ImGui_ImplSDL2_InitForOpenGL(window, gl_context);
         ImGui_ImplOpenGL3_Init("#version 410");
     }
 

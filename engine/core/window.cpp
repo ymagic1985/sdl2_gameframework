@@ -1,7 +1,7 @@
 #include "window.h" 
 #include "application.h"
 #include "renderer/renderer.h"
-#include "platform/openGL/openGLContext.h"
+//#include "platform/openGL/openGLContext.h"
 #include <SDL2/SDL.h>
 namespace Man520 {
 
@@ -87,7 +87,7 @@ namespace Man520 {
         mContext->swapBuffers();
     }
     
-    void* Window::getSDLGLContext() {
+    /*void* Window::getSDLGLContext() {
         return static_cast<OpenGLContext&>(*mContext).getSDL_GLContext();
-    }
+    }*/
 }

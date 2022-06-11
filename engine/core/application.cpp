@@ -68,7 +68,6 @@ namespace Man520 {
                 }
                 mImguiLayer->end();
 
-                mUpdateCallback();
 
        //       SDL_RenderPresent(sRenderer);
                 mWindow->onUpdate();               

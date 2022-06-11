@@ -30,7 +30,7 @@ namespace Man520 {
             void handleEvent(SDL_Event& e);
             inline SDL_Window*& getSDLWindow() { return mWindow; }
             inline GraphicsContext& getGraphicsContext() { return *mContext; }
-            void* getSDLGLContext();
+            //void* getSDLGLContext();
             inline bool isFullscreen() const { return mFullScreen; }
             inline bool isMinimized() const { return mMinimized; }
 

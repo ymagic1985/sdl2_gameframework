@@ -23,9 +23,9 @@ class Sandbox3D : public Man520::Layer {
         Man520::Ref<Man520::VertexArray> boxVA, lightVA;
         Camera camera{glm::vec3(0.0f, 0.0f, 3.0f)};
         float mouseX = .0f, mouseY = .0f;
-  glm::vec3 lightPos; //{1.2f, 1.0f, 2.0f};
+        glm::vec3 lightPos; //{1.2f, 1.0f, 2.0f};
 
-  glm::vec3 cubePositions[10]; /* = {
+        glm::vec3 cubePositions[10]; /* = {
                 glm::vec3( 0.0f,  0.0f,  0.0f),
                 glm::vec3( 2.0f,  5.0f, -15.0f),
                 glm::vec3(-1.5f, -2.2f, -2.5f),
