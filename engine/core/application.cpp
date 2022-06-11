@@ -63,10 +63,8 @@ namespace Man520 {
 
                 mImguiLayer->begin();
                 {
-                    //TODO:
-                    //for (Layer* layer : m_LayerStack)
-                    //layer->OnImGuiRender();
-                    ImGui::ShowDemoWindow();    
+                    for (Layer* layer : mLayerStack)
+                        layer->onImguiRender();
                 }
                 mImguiLayer->end();
 
@@ -95,7 +93,7 @@ namespace Man520 {
                     mWindow->handleEvent(event);
                     break;
                 case SDL_KEYDOWN:
-                    if(event.key.keysym.sym == SDLK_RETURN)
+                    if((event.key.keysym.sym == SDLK_RCTRL || event.key.keysym.sym == SDLK_LCTRL) && event.key.keysym.sym == SDLK_f)
                         mWindow->fullScreenSwitch();
                     break;
              }

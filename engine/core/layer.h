@@ -14,7 +14,7 @@ namespace Man520 {
             virtual void onDetach() {}
             virtual void onUpdate() {}
             virtual bool onEvent(SDL_Event& event) { return false; }
-
+            virtual void onImguiRender() {}
             inline const std::string& getName() const { return mName; }
         protected:
             std::string mName;

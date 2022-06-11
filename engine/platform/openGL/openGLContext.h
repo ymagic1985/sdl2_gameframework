@@ -11,6 +11,7 @@ namespace Man520 {
 
             virtual void init() override;
             virtual void swapBuffers() override;
+            SDL_GLContext getSDL_GLContext() { return mGLContext; }
         private:
             SDL_Window* mWindowHandle;
             SDL_GLContext mGLContext;

@@ -12,7 +12,7 @@ namespace Man520 {
             virtual void onAttach() override;
             virtual void onDetach() override;
             virtual bool onEvent(SDL_Event& event) override;
-
+            virtual void onImguiRender() override;
             void begin();
             void end();
 

@@ -1,7 +1,7 @@
 #include "window.h" 
 #include "application.h"
 #include "renderer/renderer.h"
-
+#include "platform/openGL/openGLContext.h"
 #include <SDL2/SDL.h>
 namespace Man520 {
 
@@ -10,15 +10,15 @@ namespace Man520 {
         mProps.mWidth = w;
         mProps.mHeight = h;
 
-        uint32_t flags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
-        switch(api) {
+        SDL_WindowFlags flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
+        /*switch(api) {
             case RendererAPI::API::OpenGL: flags |= SDL_WINDOW_OPENGL; break;
             default: MAN520_CORE_ASSERT(false, "Unknown RendererAPI::API in Window()"); break;
-        }
+        }*/
         //TODO: Switch graphics API
         mWindow = SDL_CreateWindow(title.c_str(), 
-                SDL_WINDOWPOS_UNDEFINED, 
-                SDL_WINDOWPOS_UNDEFINED,
+                SDL_WINDOWPOS_CENTERED, 
+                SDL_WINDOWPOS_CENTERED,
                 w,
                 h,
                 flags);
@@ -86,5 +86,8 @@ namespace Man520 {
     void Window::onUpdate() {
         mContext->swapBuffers();
     }
-
+    
+    void* Window::getSDLGLContext() {
+        return static_cast<OpenGLContext&>(*mContext).getSDL_GLContext();
+    }
 }

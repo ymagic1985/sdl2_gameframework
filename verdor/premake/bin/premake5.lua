@@ -19,12 +19,17 @@ project "sdl2_gameframework"
 
     files
     {
-        "../../../include/**.h",
-        "../../../src/**.cpp",
+        "../../../engine/**.h",
+        "../../../engine/**.cpp",
     }
     
     libdirs { "libs", "../../../lib" }
     libdirs { "libs", "../../../lib/entt/include" }
+    libdirs { "libs", "../../../lib/spdlog/include" }
+    libdirs { "libs", "../../../lib/stb"}
+    libdirs { "libs", "../../../lib/glm"}
+    libdirs { "libs", "../../../lib/glad/include"}
+    libdirs { "libs", "../../../lib/imgui"}
     libdirs {"libs", "../../../../../../../Library/Frameworks/SDL2.framework" }
     
     filter "system:macOS"
